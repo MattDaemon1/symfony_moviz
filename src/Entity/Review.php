@@ -15,10 +15,10 @@ class Review
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?int $rate = null;
+    private ?smallint $rate = null;
 
     #[ORM\Column(length: 255)]
-    private ?text $review = null;
+    private ?Text $review = null;
 
     #[ORM\Column]
     private ?bool $approved = null;
