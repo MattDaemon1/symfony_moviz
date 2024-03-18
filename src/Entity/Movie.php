@@ -22,7 +22,7 @@ class Movie
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $release_date = null;
 
-    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'Movie', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'movie', orphanRemoval: true)]
     private Collection $reviews;
 
     #[ORM\ManyToMany(targetEntity: Director::class, inversedBy: 'movies')]
@@ -36,6 +36,11 @@ class Movie
         $this->reviews = new ArrayCollection();
         $this->directors = new ArrayCollection();
         $this->genres = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 
     public function getId(): ?int

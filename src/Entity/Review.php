@@ -15,21 +15,21 @@ class Review
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?smallint $rate = null;
+    private ?int $rate = null;
 
-    #[ORM\Column(length: 255)]
-    private ?Text $review = null;
+    #[ORM\Column(type: "text")]
+    private ?string $review = null;
 
     #[ORM\Column]
     private ?bool $approved = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $user = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Movie $Movie = null;
+    private ?Movie $movie = null;
 
     public function getId(): ?int
     {
@@ -86,12 +86,12 @@ class Review
 
     public function getMovie(): ?Movie
     {
-        return $this->Movie;
+        return $this->movie;
     }
 
     public function setMovie(?Movie $Movie): static
     {
-        $this->Movie = $Movie;
+        $this->movie = $Movie;
 
         return $this;
     }
