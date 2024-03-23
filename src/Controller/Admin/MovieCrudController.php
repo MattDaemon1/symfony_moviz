@@ -6,6 +6,7 @@ use App\Entity\Movie;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -23,13 +24,18 @@ class MovieCrudController extends AbstractCrudController
     
     public function configureFields(string $pageName): iterable
     {
-        yield TextField ::new('name', 'Nom');
-        yield DateField ::new('release_date', 'Date de sortie');
-        yield TimeField ::new( 'duration','Durée');
+        $mappingsParams = $this->getParameter('vich_uploader.mappings');
+
+        $moviesImagePath = $mappingsParams['movies']['uri_prefix'];
+
+        yield TextField::new('name', 'Nom');
+        yield DateField::new('release_date', 'Date de sortie');
+        yield TimeField::new( 'duration','Durée');
         yield TextEditorField::new( 'synopsis', 'Synopsis');
         yield TextareaField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex();
-        yield AssociationField ::new('directors', 'Réalisateurs');
-        yield AssociationField ::new('genres', 'Genres');
+        yield ImageField::new('imageName')->setBasePath($moviesImagePath)->hideOnForm();
+        yield AssociationField::new('directors', 'Réalisateurs');
+        yield AssociationField::new('genres', 'Genres');
     }
     
     
