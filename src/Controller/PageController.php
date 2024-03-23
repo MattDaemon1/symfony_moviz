@@ -13,13 +13,9 @@ class PageController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(MovieRepository $movieRepository, ParameterBagInterface $parameterBagInterface): Response
     {
-        $limit = $parameterBagInterface->get('home_movies_limit');
-        $movies = $movieRepository->findBy([],['id' =>  'DESC'],$limit);
-        
         $websiteName = "Moviz";
         return $this->render('page/index.html.twig', [
             'websiteName' => $websiteName,
-            'movies' => $movies,
         ]);
     }
 

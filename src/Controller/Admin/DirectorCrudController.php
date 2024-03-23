@@ -18,10 +18,9 @@ class DirectorCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
             TextField::new('first_name', 'Prénom'),
             TextField::new('last_name', 'Nom'),
-            // Autres champs comme nécessaires
+            
         ];
     }
     
