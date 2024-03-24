@@ -17,9 +17,10 @@ use Symfony\Component\Routing\Attribute\Route;
 class MovieController extends AbstractController
 {
     #[Route('/films', name: 'app_movies')]
-    public function index(MovieRepository $movieRepository): Response
+    public function index(MovieRepository $movieRepository,Request $request): Response
     {
-        $movies = $movieRepository->findBy([], ['id' => 'DESC']);
+        $genreId = $request->get('genreId');
+        $movies = $movieRepository->findMovies($genreId);
 
 
         return $this->render('movie/index.html.twig', [
