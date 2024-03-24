@@ -11,17 +11,17 @@ class Review
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(nullable: false)]
+    private ?int $id;
 
-    #[ORM\Column(length: 255)]
-    private ?int $rate = null;
+    #[ORM\Column(type: "integer", nullable: false)]
+    private ?int $rate = 5;
 
-    #[ORM\Column(type: "text")]
-    private ?string $review = null;
+    #[ORM\Column(type: "text", nullable: true)]
+    private ?string $review = "J'ai adoré ce film";
 
-    #[ORM\Column]
-    private ?bool $approved = null;
+    #[ORM\Column(nullable: false)]
+    private ?bool $approved = true;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
@@ -36,12 +36,12 @@ class Review
         return $this->id;
     }
 
-    public function getRate(): ?string
+    public function getRate(): ?int
     {
         return $this->rate;
     }
 
-    public function setRate(string $rate): static
+    public function setRate(int $rate): static
     {
         $this->rate = $rate;
 
@@ -89,9 +89,9 @@ class Review
         return $this->movie;
     }
 
-    public function setMovie(?Movie $Movie): static
+    public function setMovie(?movie $movie): static
     {
-        $this->movie = $Movie;
+        $this->movie = $movie;
 
         return $this;
     }
