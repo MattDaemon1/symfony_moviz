@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class MovieController extends AbstractController
@@ -30,8 +31,12 @@ class MovieController extends AbstractController
     }
 
     #[Route('/films/{id}', name: 'app_movie_show')]
-    public function show(Movie $movie,Request $request, EntityManagerInterface $entityManager, Security $security, ReviewRepository $reviewRepository): Response
+    public function show(Movie $movie,Request $request, EntityManagerInterface $entityManager, Security $security, ReviewRepository $reviewRepository,
+    SessionInterface $session): Response
     {
+
+        $session->set('previous_url', $request->getUri() );
+
         $averageRate = $reviewRepository->getAverageRateByMovieId($movie->getId());
         
         $user = $security->getUser();
